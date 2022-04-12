@@ -34,14 +34,10 @@ print("\na =", a )
 clientsocket.send(bytes(str(a), 'utf8'))  # send a to server
 
 
-print('\n\nEnter your key: ',end='')
-    # ask user for the key to be used in cipher
-key = input()
-clientsocket.send(key.encode()) #send key to server
 
-print()
+#print()
 
-print("Your encrypted message is : ")
-print(clientsocket.recv(1024).decode()) #recieve encrypted message
-print("Thank you for using Caesar cipher")
+#print("Your encrypted message is : ")
+#print(clientsocket.recv(1024).decode()) #recieve encrypted message
+#print("Thank you for using Caesar cipher")
 
