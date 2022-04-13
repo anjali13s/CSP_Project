@@ -60,28 +60,28 @@ def new_encryption(clientsocket, address):
       #      q = primeNum
        #     break    
 
-    p = 3
-    q = 7
+    p = 23
+    q = 31
     print("p = ", p ," and q = ", q)
 
     n = p*q
 
     print("n = ", n)
 
-    clientsocket.send(bytes(str(n), 'utf8'))
+    clientsocket.send(bytes(str(n), 'utf8')) #send n to Bob
 
-    number = clientsocket.recv(1024) #recieve n
-    print(number)
+    number = clientsocket.recv(1024) #recieve a
     strings = str(number, 'utf8')
     #get the a
     a = int(strings)
     print("a = ",a)
-    r1 = a%p
+    #finding amodp and amodq to easier find roots of amodn
+    r1 = a%p 
     r2 = a%q
     print ("r1 = ", r1, "and r2 = ", r2)
 
-    array1 = []
-    array2 = []
+    array1 = [] #array for roots of amodp
+    array2 = [] #array for roots of amodq
     for i in range (1, n):
         if((i**2)%p == r1):
            array1.append(i)
@@ -91,15 +91,47 @@ def new_encryption(clientsocket, address):
 
     print("array1 = ",array1, " and array2 = ",array2)
 
+    roots = list(common_member(array1, array2)) #find four square roots which are common in amodp and amodq
+    print("roots = ",roots)
 
+    guess = random.choice(roots) #choose a random choice out of the four roots
+    print("guess = ", guess)
     
-    key = int(clientsocket.recv(1024).decode())
+    clientsocket.send(bytes(str(guess), 'utf8')) #send your guess
     
-    encrypted = cipher_encrypt(input_message, key)
-    print(encrypted)
-    clientsocket.send(encrypted.encode())
+    result = clientsocket.recv(1024).decode() #receive result, if you won or lost
+    print(result)
+
+    if(result == 'You win'):
+        clientsocket.send(bytes(str(p), 'utf8')) #send p for Bob to check
+        if clientsocket.recv(1024).decode() == 'OK': #recieve ok to move to next code
+            clientsocket.send(bytes(str(q), 'utf8')) #send q for Bob to check
+       
+    elif(result == 'You lost'):   
+        number3 = clientsocket.recv(1024) #recieve Bob's answer of p
+        strings3 = str(number3, 'utf8')
+        #get p
+        p1 = int(strings3)
+        clientsocket.send('OK'.encode()) #send ok to move to next code
+        number4 = clientsocket.recv(1024) #recieve Bob's answer of q
+        strings4 = str(number4, 'utf8')
+        #get p
+        q1 = int(strings4)
+        print("Bob tells that your p and q were",p1,"and",q1)
+
+
   
-  
+def common_member(a, b):   
+        a_set = set(a)
+        b_set = set(b)
+        
+     
+        # check length
+        if len(a_set.intersection(b_set)) > 0:
+            return(a_set.intersection(b_set)) 
+        else:
+            return("no common elements")
+
 
 
 
@@ -123,3 +155,4 @@ while True:
 
 print('The server is going down!')
 serversocket.close()    # close down the server
+
