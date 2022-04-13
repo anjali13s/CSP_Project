@@ -49,7 +49,7 @@ def new_encryption(clientsocket, address):
 
    
     
-    n_length = 50
+    n_length = 10
 
 
     while(True):
