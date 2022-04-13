@@ -49,21 +49,21 @@ def new_encryption(clientsocket, address):
 
    
     
-    n_length = 10
+    n_length = 20 #length of p and q
 
-
+    #function to get random primes
     while(True):
-        p = number.getPrime(n_length, os.urandom)
+        p = number.getPrime(n_length, os.urandom) #getting p
         print(p)
-        if(p%4 != 3):
+        if(p%4 != 3): #ensuring p is of the form 3mod4
             p = number.getPrime(n_length, os.urandom)
         else:    
             break
 
     while(True):
-        q = number.getPrime(n_length, os.urandom)
+        q = number.getPrime(n_length, os.urandom) #getting q
         print(q)
-        if(q%4 != 3 or q == p):
+        if(q%4 != 3 or q == p): #ensuring q is of the form 3mod4 and not equal to p
             q = number.getPrime(n_length, os.urandom)
 
         else:    
@@ -71,9 +71,6 @@ def new_encryption(clientsocket, address):
 
     print("p = ",p,"q = ",q)
 
-    #p = 79
-    #q = 1
-    #print("p = ", p ," and q = ", q)
 
     n = p*q
 
