@@ -1,5 +1,7 @@
 import socket, sys, threading, string
 from Crypto.Util import number
+from Crypto.PublicKey import RSA
+import os
 import random
 
 
@@ -46,23 +48,32 @@ def new_encryption(clientsocket, address):
         clientsocket.close()
 
    
-    #n_length = 3
+    
+    n_length = 50
 
-    #while(True):
-     #   primeNum = number.getPrime(n_length, randFunc)
-      #  if(primeNum%3 == 4):
-       #     p = primeNum
-        #    break
 
-   # while(True):
-    #    primeNum = number.getPrime(n_length, randFunc)
-     #   if(primeNum%3 == 4 and primeNum!=p):
-      #      q = primeNum
-       #     break    
+    while(True):
+        p = number.getPrime(n_length, os.urandom)
+        print(p)
+        if(p%4 != 3):
+            p = number.getPrime(n_length, os.urandom)
+        else:    
+            break
 
-    p = 23
-    q = 31
-    print("p = ", p ," and q = ", q)
+    while(True):
+        q = number.getPrime(n_length, os.urandom)
+        print(q)
+        if(q%4 != 3 or q == p):
+            q = number.getPrime(n_length, os.urandom)
+
+        else:    
+            break    
+
+    print("p = ",p,"q = ",q)
+
+    #p = 79
+    #q = 1
+    #print("p = ", p ," and q = ", q)
 
     n = p*q
 
@@ -70,8 +81,8 @@ def new_encryption(clientsocket, address):
 
     clientsocket.send(bytes(str(n), 'utf8')) #send n to Bob
 
-    number = clientsocket.recv(1024) #recieve a
-    strings = str(number, 'utf8')
+    number1 = clientsocket.recv(1024) #recieve a
+    strings = str(number1, 'utf8')
     #get the a
     a = int(strings)
     print("a = ",a)
