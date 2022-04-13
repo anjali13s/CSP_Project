@@ -102,4 +102,3 @@ print()
 
 print("Thank you for using coin flipping by telephone")
 
-
