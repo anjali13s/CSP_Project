@@ -34,7 +34,7 @@ print(clientsocket.recv(1024).decode())   # --> returns a string
 clientsocket.send('OK'.encode())
 
 number = clientsocket.recv(1024) #recieve n
-print(number)
+#print(number)
 strings = str(number, 'utf8')
 #get the n
 n = int(strings)
