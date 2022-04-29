@@ -62,7 +62,7 @@ print("\nAlice's guess = ", guess)
 if(guess == x or guess == (n-x)): #if guess is equal to x or n-x
     print("\nAlice wins")
     clientsocket.send('You win'.encode()) #send result
-    clientsocket.send(bytes(str(x), 'utf8'))
+    clientsocket.send(bytes(str(x), 'utf8')) #send value of x to Alice
     number3 = clientsocket.recv(1024) #recieve p
     strings3 = str(number3, 'utf8')
     #get p
@@ -77,7 +77,7 @@ if(guess == x or guess == (n-x)): #if guess is equal to x or n-x
 else:
     print("\nAlice lost")    
     clientsocket.send('You lost'.encode()) #send result
-    clientsocket.send(bytes(str(x), 'utf8'))
+    clientsocket.send(bytes(str(x), 'utf8')) #send value of x to Alice
     gcd_p = gcdExtended((guess-x),n) #using Alice's guess and your x and n find p
     gcd_q = gcdExtended((guess+x),n) #using Alice's guess and your x and n find q
     #print(gcd_p[:1], gcd_q[:1])
