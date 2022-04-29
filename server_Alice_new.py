@@ -106,7 +106,7 @@ def new_encryption(clientsocket, address):
     root3 = (-1*r1)%n #third root
     root4 = (-1*r2)%n #fourth root
     roots = []
-    print("roots are ", root1, root2, root3, root4)
+    print("Roots are ", root1, ",", root2, ",", root3, ",", root4)
     roots.append(root1)
     roots.append(root2)
     roots.append(root3)
@@ -114,7 +114,7 @@ def new_encryption(clientsocket, address):
     #print("roots = ",roots)
 
     guess = random.choice(roots) #choose a random choice out of the four roots
-    print("guess = ", guess)
+    print("Your guess = ", guess)
     
     clientsocket.send(bytes(str(guess), 'utf8')) #send your guess
     
