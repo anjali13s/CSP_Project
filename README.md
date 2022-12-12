@@ -1,1 +1,2 @@
-# CSP_Project
+# Computer Security and Privacy 
+## Course Project
