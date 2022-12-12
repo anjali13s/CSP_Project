@@ -1,2 +1,1 @@
-# Computer Security and Privacy 
-## Course Project
+# Computer Security and Privacy: Course Project
